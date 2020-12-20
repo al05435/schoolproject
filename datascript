@@ -1,0 +1,201 @@
+USE [master]
+GO
+/****** Object:  Database [school]    Script Date: 12/20/2020 12:52:38 PM ******/
+CREATE DATABASE [school]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'school', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\school.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'school_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\school_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [school] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [school].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [school] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [school] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [school] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [school] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [school] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [school] SET AUTO_CLOSE OFF 
+GOA
+ALTER DATABASE [school] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [school] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [school] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [school] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [school] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [school] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [school] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [school] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [school] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [school] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [school] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [school] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [school] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [school] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [school] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [school] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [school] SET RECOVERY FULL 
+GO
+ALTER DATABASE [school] SET  MULTI_USER 
+GO
+ALTER DATABASE [school] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [school] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [school] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [school] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [school] SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'school', N'ON'
+GO
+ALTER DATABASE [school] SET QUERY_STORE = OFF
+GO
+USE [school]
+GO
+/****** Object:  Table [dbo].[Course]    Script Date: 12/20/2020 12:52:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Course](
+	[CourseID] [nchar](10) NOT NULL,
+	[CourseName] [varchar](50) NOT NULL,
+	[year] [char](10) NULL,
+	[TermNo] [char](10) NULL,
+	[DepartmentID] [nchar](10) NULL,
+	[RoleID] [nchar](10) NULL,
+	[GradeID] [nchar](10) NULL,
+	[RegisterationID] [nchar](10) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Dues]    Script Date: 12/20/2020 12:52:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Dues](
+	[DueID] [int] IDENTITY(1,1) NOT NULL,
+	[FeeID] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Enrollment]    Script Date: 12/20/2020 12:52:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Enrollment](
+	[CourseID] [nchar](10) NOT NULL,
+	[CourseName] [varchar](50) NOT NULL,
+	[InstructorName] [varchar](50) NOT NULL,
+	[Time] [nchar](10) NOT NULL,
+	[days] [varchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Fee]    Script Date: 12/20/2020 12:52:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Fee](
+	[FeeID] [int] NOT NULL,
+	[DueID] [int] NOT NULL,
+	[Year] [nchar](10) NOT NULL,
+	[Month] [nchar](10) NOT NULL,
+	[Discount] [int] NOT NULL,
+	[Due] [money] NOT NULL,
+	[Paid] [bit] NOT NULL,
+	[Fee] [money] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Grade]    Script Date: 12/20/2020 12:52:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Grade](
+	[GradeID] [int] IDENTITY(1,1) NOT NULL,
+	[MaxMarks] [char](10) NOT NULL,
+	[ObtainedMarks] [char](10) NOT NULL,
+	[Percentage] [char](10) NOT NULL,
+	[CourseID] [char](10) NOT NULL,
+	[StudentID] [nchar](10) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Schedulee]    Script Date: 12/20/2020 12:52:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Schedulee](
+	[ScheduleID] [int] NOT NULL,
+	[CourseID] [nchar](10) NOT NULL,
+	[day] [varchar](50) NOT NULL,
+	[time] [nchar](10) NOT NULL,
+	[StudentID] [nchar](10) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[studentinfo]    Script Date: 12/20/2020 12:52:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[studentinfo](
+	[StudentID] [nchar](10) NOT NULL,
+	[Gender] [varchar](50) NOT NULL,
+	[DOB] [datetime] NOT NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[PhoneNo] [char](10) NOT NULL,
+	[FeeDue] [bit] NOT NULL,
+	[Password] [text] NOT NULL,
+	[address] [varchar](100) NOT NULL,
+	[DueID] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UniStagingData]    Script Date: 12/20/2020 12:52:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UniStagingData](
+	[ID] [tinyint] NOT NULL,
+	[UNIVERSITY] [nvarchar](100) NOT NULL,
+	[DEPARTMENTS] [nvarchar](100) NULL,
+	[DEGREE] [nvarchar](50) NULL,
+	[PROGRAMS] [nvarchar](100) NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[studentinfo] ADD  DEFAULT (' ') FOR [address]
+GO
+USE [master]
+GO
+ALTER DATABASE [school] SET  READ_WRITE 
+GO
